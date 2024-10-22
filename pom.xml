@@ -54,7 +54,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <!-- nombre del módulo/clase main. El nombre del módulo lo puedes sacar del modules.info y clase del main-->
-                            <mainClass>es.etg.psp.calc.Lanzador</mainClass>
+                            <mainClass>es.etg.psp.io.Flujo</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -65,7 +65,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <mainClass>es.etg.psp.calc.Lanzador</mainClass>
+                    <mainClass>es.etg.psp.io.Flujo</mainClass>
                 </configuration>
             </plugin>
             <plugin>

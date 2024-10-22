@@ -1,12 +1,17 @@
-# Ejemplo de suma
+# Ejemplo de flujos
 
-Este ejemplo hace lo siguiente:
+Este ejemplo muestra como operar con los flujos en los procesos gestionados por java.
 
-- Tenemos un programa que implementa la suma de números en un intervalor pasado en la invocación al programa:
-  - es.etg.psp.calc.Suma
-- Tenemos un programa que interactúa con el usuario para solicitarle dos números (esta parte no está implementada, se le pasan por parámetro al programa los valores 2 y 3) y el programa invoca al programa Suma con los valores proporcionados.
-  - es.etg.psp.calc.Lanzador
+La clase Flujo lanza invoca al comando grep y le pasa un texto. El comando grep analiza el texto y devuelve al programa principal (Flujo) el resultado de la salida.
 
+```mermaid
+flowchart LR
+
+F["Flujo"]--texto-->G[grep]
+
+G-.resultado.->F
+
+```
 
 ## Ejecutar el programa
 
@@ -14,14 +19,14 @@ Este ejemplo hace lo siguiente:
 
 1. Compilamos el contenido de los paquetes
    
-2. Ejecutamos el programa Lanzador.
+2. Ejecutamos el programa Flujo.
 
 
->NOTA: Recuerda que te tienes que situar en la carpeta `src/main/java` para que la invocación sea correcta.
+>NOTA: Recuerda que te tienes que situar en la carpeta `src/main/java` para que la invocación sea correcta si lo ejecutas de forma manual.
 
 ### Compilación y ejecución con Maven
 
 1. Compilamos todo: `mvn compile`
-2. Nos movemos a la carpeta `target\classes` y ejecutamos en lanzador.
+2. Ejecutamos: `mvn exec:java`
 
 
