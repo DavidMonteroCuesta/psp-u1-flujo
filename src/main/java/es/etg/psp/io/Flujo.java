@@ -21,15 +21,18 @@ public class Flujo {
 
     public static void main(String[] args) throws Exception{
 		try {
+
+			//Defino el proceso a ejecutar
 			Process process = Runtime.getRuntime().exec(COMANDOS);
 
+			// Le paso al proceso el texto que quiero que procese
 			OutputStream out = process.getOutputStream();
 			PrintWriter pw =new PrintWriter(new OutputStreamWriter(out));
             pw.println(ENTRADA);
             pw.close();
 
+			//Proceso la salida de la ejecución del proceso
 			StringBuilder output = new StringBuilder();
-
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {

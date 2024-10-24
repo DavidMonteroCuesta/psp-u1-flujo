@@ -30,3 +30,10 @@ G-.resultado.->F
 2. Ejecutamos: `mvn exec:java`
 
 
+## Repaso de sistemas
+
+El comando grep permite localizar un patrón dentro de una secuencia de caracteres.
+
+Ejemplo de uso: `grep PSP grep.txt`
+
+>NOTA: El comando anterior es lo que ejecuta el programa que se ha implementado.
