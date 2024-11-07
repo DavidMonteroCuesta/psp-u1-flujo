@@ -1,0 +1,13 @@
+@startuml Doc
+
+class Flujo {
+    + ejecutar(comando: String) : StringBuilder
+}
+
+interface EscrituraF{
+    {static} escribir(nombreF: String, contenido: String)
+    {static} vaciar(nombreF: String)
+}
+
+Flujo ..|> EscrituraF
+@enduml

@@ -3,56 +3,55 @@ package es.etg.psp.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
-public class Flujo {
+import es.etg.psp.io.LyEF.EscrituraFichero;
 
-    public static final String MSG_ERROR = "Se ha producido un error al ejecutar el comando";
-	public static final String ENTRADA ="""
-                                            Me gusta PSP y java
-                                            PSP se programa en java
-                                            es un módulo de DAM
-                                            y se programa de forma concurrente en PSP
-                                            PSP es programación""" ;
+public class Flujo  implements EscrituraFichero{
 
-    public static final String[] COMANDOS = {"grep", "PSP"}; //lista
+	private static final String DEPRECATION = "deprecation";
+    private static final String RUTA_FICHERO = "./../../../informacion.md";
+	public static final String MSG_ERROR = "Se ha producido un error al ejecutar el comando";
+	public static final String PROCESOS = "PROCESOS";
+	public static final String FICHEROS = "FICHEROS";
+	public static final String ESPACIO_LIBRE = "ESPACIO LIBRE";
+	public static final String COMANDO_1 = "df"; 
+    public static final String COMANDO_2 = "free";
+	public static final String COMANDO_3 = "ps";
 
     public static void main(String[] args) throws Exception{
-		try {
+		EscrituraFichero.vaciar(RUTA_FICHERO);
 
-			//Defino el proceso a ejecutar
-			Process process = Runtime.getRuntime().exec(COMANDOS);
+		StringBuilder output1 = ejecutar(COMANDO_1);
+		StringBuilder output2 = ejecutar(COMANDO_2);
+		StringBuilder output3 = ejecutar(COMANDO_3);
+		
+		EscrituraFichero.escribir(RUTA_FICHERO, output3, PROCESOS);
+		EscrituraFichero.escribir(RUTA_FICHERO, output1, FICHEROS);
+		EscrituraFichero.escribir(RUTA_FICHERO, output2, ESPACIO_LIBRE);
+	}		
 
-			// Le paso al proceso el texto que quiero que procese
-			OutputStream out = process.getOutputStream();
-			PrintWriter pw =new PrintWriter(new OutputStreamWriter(out));
-            pw.println(ENTRADA);
-            pw.close();
+	private static StringBuilder ejecutar(String comando) {
+        try {
+            @SuppressWarnings(DEPRECATION)
+            Process process = Runtime.getRuntime().exec(comando);
 
-			//Proceso la salida de la ejecución del proceso
-			StringBuilder output = new StringBuilder();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				output.append(line).append("\n");
-			}
+            StringBuilder output = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append(SALTO_DE_LINEA);
+            }
 
-        //Dejamos el programa bloqueado hasta que termine el otro.
-			int exitVal = process.waitFor();
-			if (exitVal == 0) {
-				System.out.println(output);
-				System.exit(0);
-			} else {
-				System.out.println(MSG_ERROR);
-				System.exit(1);
-			}
+            int exitVal = process.waitFor();
+            if (exitVal != 0) {
+                System.out.println(MSG_ERROR);
+                System.exit(1);
+            }
+            return output;
 
-		} catch (IOException | InterruptedException e) {
-			System.exit(34);
-		}
-
-	}
-    
+        } catch (IOException | InterruptedException e) {
+            System.exit(34);
+        }
+        return null;
+    }
 }
